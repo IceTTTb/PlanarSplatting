@@ -1,414 +1,421 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PlanarSplatting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlanarSplatting</title>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-    gtag('js', new Date());
+        gtag('js', new Date());
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
 
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="./static/css/custom.css">
+    <link rel="icon" href="./static/images/icon.png">
+    <link rel="stylesheet" href="static/demo-styles.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script src="./static/js/video_comparison.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/icon.png">
+    <style>
+        .external-link.button.is-normal.is-rounded.is-white {
+            border: 1px solid black;
+            color: black;
+            background-color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+        }
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
-  <script src="./static/js/video_comparison.js"></script>
+        .external-link.button.is-normal.is-rounded.is-white:hover {
+            background-color: lightgray;
+            border-color: darkgray;
+        }
 
-  <link rel="stylesheet" href="./static/css/custom.css">
-
-  <style>
-    .external-link.button.is-normal.is-rounded.is-white {
-        border: 1px solid black; 
-        color: black; 
-        background-color: white; 
-        padding: 10px 20px; 
-        text-decoration: none; 
-        border-radius: 10px; 
-        display: inline-flex; 
-        align-items: center; 
-    }
-    .external-link.button.is-normal.is-rounded.is-white:hover {
-        background-color: lightgray; 
-        border-color: darkgray; 
-    }
-    video {
+        video {
             max-width: 70%;
             height: auto;
-            /* border: 1px solid #333;  */
-            /* border-radius: 8px;  */
         }
-    img {
-            max-width: 80%;  
-            height: auto;      
-    }
-    .custom-hr {
-           border: none; 
-           height: 2px;  
-           background-color: black; 
-           margin: 10px 0;
-       }
-</style>
 
-  <!-- model-viewer css -->
-  <link rel="stylesheet" href="static/demo-styles.css">
-  <style>
-      .example { display: none; }
-      .active { display: block; }
-      /* Add more CSS as needed */
-  </style>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    // Call the showExample function with the default value on page load
-    showExample('ScanNetV2');
-    });
-
-    function showExample(exampleId) {
-        var examples = document.getElementsByClassName("example");
-        for (var i = 0; i < examples.length; i++) {
-            examples[i].style.display = "none";
+        img {
+            max-width: 80%;
+            height: auto;
         }
-        document.getElementById(exampleId).style.display = "block";
-    }
-  </script>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
+        .custom-hr {
+            border: none;
+            height: 2px;
+            background-color: black;
+            margin: 10px 0;
+        }
 
+        .example {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Call the showExample function with the default value on page load
+            showExample('ScanNetV2');
+        });
+
+        function showExample(exampleId) {
+            var examples = document.getElementsByClassName("example");
+            for (var i = 0; i < examples.length; i++) {
+                examples[i].style.display = "none";
+            }
+            document.getElementById(exampleId).style.display = "block";
+        }
+    </script>
 </head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-L8GQZ13GL5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-L8GQZ13GL5');
-</script>
-  
 <body>
 
-<!-- <style>
-    .title_background {
-    position: relative;
-    display: inline-block;
-    }
+    <section class="hero">
+        <div class="title_background">
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <h1 class="title is-2 publication-title" style="color: black;">PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes</h1>
+                            <div class="is-size-6 publication-authors">
+                                <span class="author-block"><a href="https://icetttb.github.io/">Bin Tan</a><sup>1</sup>, </span>
+                                <span class="author-block"><a href="https://ruiyu0.github.io/">Rui Yu</a><sup>2</sup>, </span>
+                                <span class="author-block"><a href="https://shenyujun.github.io/">Yujun Shen</a><sup>1</sup>, </span>
+                                <span class="author-block"><a href="https://xuenan.net/">Nan Xue</a><sup>1</sup></span>
+                            </div>
+                            <div class="is-size-6 publication-authors">
+                                <span class="author-block" style="color: black;"><sup>1</sup>Ant Group, </span>
+                                <span class="author-block" style="color: black;"><sup>2</sup>University of Louisville</span>
+                            </div>
+                            <br />
+                            <div class="is-size-6 publication-authors">
+                                <span class="author-block" style="color: rgb(202, 8, 8); font-weight: bold;">CVPR 2025 (Highlight)</span>
+                            </div>
+                            <br />
+                            <div class="column has-text-centered">
+                                <div class="publication-links">
+                                    <span class="link-block">
+                                        <a href="https://arxiv.org/abs/2412.03451" class="external-link button is-normal is-rounded is-white">
+                                            <span class="icon">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </span>
+                                            <span>Paper</span>
+                                        </a>
+                                    </span>
+                                    <span class="link-block">
+                                        <a href="" class="external-link button is-normal is-rounded is-white">
+                                            <span class="icon">
+                                                <i class="fab fa-github"></i>
+                                            </span>
+                                            <span>Code (coming soon)</span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
 
-    .title_background::before {
-        content: "";
-        position: absolute;
-        top: 10;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('static/images/ours08.png') no-repeat center/cover;
-        /* filter: brightness(80%); */
-        opacity: 0.1;
-        z-index: -1;
-    }
-</style> -->
-
-
-<section class="hero">
-<div class="title_background">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered ">
-           <!-- <h1 class="title is-2 model-name" style="color: black;">PlanarSplatting</h1> -->
-            <!-- <h1 class="title is-2 model-name"><img src="static/images/icon_white.png" width="50">   Lumos</h1> -->
-          <h1 class="title is-2 publication-title" style="color: black;">PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes</h1>
-          <div class="is-size-6 publication-authors">
-            <span class="author-block">
-            <a href="https://icetttb.github.io/">Bin Tan</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-            <a href="https://ruiyu0.github.io/">Rui Yu</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-                <a href="https://shenyujun.github.io/">Yujun Shen</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-                <a href="https://xuenan.net/">Nan Xue</a><sup>1</sup>
-            </span>
-          </div>
-          <div class="is-size-6 publication-authors">
-            <span class="author-block" style="color: black;"><sup>1</sup>Ant Group,</span>
-            <span class="author-block" style="color: black;"><sup>2</sup>University of Louisville</span>
-          </div>
-          <br/>
-          <div class="is-size-6 publication-authors">
-            <span class="author-block" style="color: rgb(202, 8, 8); font-weight: bold;">CVPR 2025 (Highlight)</span>
-          </div>
-          </br>
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2412.03451"
-                   class="external-link button is-normal is-rounded is-white">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-white">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-          
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
         </div>
-      </div>
-    </div>
-    
-  </div>
-</section>
-</div>
+    </section>
 
-<hr class="custom-hr">
+    <!-- <hr class="custom-hr"> -->
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            This paper presents PlanarSplatting, an ultra-fast and accurate surface reconstruction approach for multiview indoor images. 
-            We take the 3D planes as the main objective due to their compactness and structural expressiveness in indoor scenes, and develop an explicit optimization framework that learns to fit the expected surface of indoor scenes by splatting the 3D planes into 2.5D depth and normal maps. 
-            As our PlanarSplatting operates directly on the 3D plane primitives, it eliminates the dependencies on 2D/3D plane detection and plane matching and tracking for planar surface reconstruction. 
-            Furthermore, the essential merits of plane-based representation plus CUDA-based implementation of planar splatting functions, PlanarSplatting reconstructs an indoor scene in 3 minutes while having significantly better geometric accuracy. 
-            Thanks to our ultra-fast reconstruction speed, the largest quantitative evaluation on the ScanNet and ScanNet++ datasets over hundreds of scenes clearly demonstrated the advantages of our method. 
-            We believe that our accurate and ultrafast planar surface reconstruction method will be applied in the structured data curation for surface reconstruction in the future. The code of our CUDA implementation will be publicly available.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-</section>
-
-
-<!-- <div class="div-1"> -->
-<!-- <section class="section">
-  <div class="container">
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-four-fifths">
-      <h2 class="title is-3">Pipeline</h2>
-      <img src="static/images/pipeline.png" alt="Description of image">
-    </div>
-    
-  </div>
-  </div>
-</section> -->
-<!-- </div> -->
-
-<!-- <div class="div-1"> -->
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <h2 class="title is-3">Optimization Example</h2>
-            <video autoplay muted loop playsinline>
-              <source src="static/images/PlanarSplatting_video.mp4" type="video/mp4">
-            </video>
+    <section class="hero is-light is-small">
+      <div class="hero-body" >
+        <div class="container">
+          <h2 class="title is-3 has-text-centered">Interactive Meshes by PlanarSplatting</h2> 
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-mesh">
+              <div id="card">
+                <model-viewer camera-controls id="glb_scanNetV2_1" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0338_00_simple.glb"></model-viewer>
+              </div>
+            </div>
+            <div class="item item-mesh">
+              <div id="card">
+                <model-viewer camera-controls id="glb_scanNetV2_2" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0356_00_simple.glb"></model-viewer>
+              </div>
+            </div>
+            <div class="item item-mesh">
+              <div id="card">
+                <model-viewer camera-controls id="glb_scanNetpp_0" orientation="0deg-90deg180deg" src="meshes/scannetpp/0a7cc12c0e_simple.glb"></model-viewer>
+              </div>
+            </div>
+            <div class="item item-mesh">
+              <div id="card">
+                <model-viewer camera-controls id="glb_scanNetV2_0" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0686_00_simple.glb"></model-viewer>
+              </div>
+            </div>
+            <div class="item item-mesh">
+              <div id="card">
+                <model-viewer camera-controls id="glb_scanNetpp_1" orientation="0deg-90deg180deg" src="meshes/scannetpp/324d07a5b3_simple.glb"></model-viewer>
+              </div>
+            </div>
+            <div class="item item-mesh">
+              <div id="card">
+                <model-viewer camera-controls id="glb_scanNetpp_1" orientation="0deg-90deg180deg" src="meshes/scannetpp/dfac5b38df_simple.glb"></model-viewer>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-<!-- </div> -->
 
-<div class="div-1">
-  <section class="section">
-      <div class="container">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Planar Reconstruction Results</h2>
-        <img src="static/images/compare.png" alt="Description of image">
-      </div>
-    </div>
-      </div>
-  </section>
-</div>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Interactive Meshes by PlanarSplatting</h2>
-    
-    <div id="exampleList" style="text-align: center;">
-      <div>
-        <span>
-          <button id="scanNetV2Button" onclick="showExample('ScanNetV2')" 
-                  class="external-link button is-normal is-rounded is-dark">
-            ScanNetV2
-          </button>
-        </span>
-        <span>
-          <button onclick="showExample('ScanNet++')" 
-                  class="external-link button is-normal is-rounded is-dark">
-            ScanNet++
-          </button>
-        </span>
-      </div>
-    </div>
-
-    <br>
-
-    <!-- ScanNetV2 Example -->
-    <div id="ScanNetV2" class="example" style="display: none;">
-      <div class="container">
-        <div class="row">
-          <div class="column column-demo-fig">
-            <div id="card">
-              <model-viewer camera-controls 
-                            id="glb_scanNetV2_0" 
-                            orientation="0deg-90deg180deg" 
-                            src="models/0_ours.glb">
-              </model-viewer>
+    <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            This paper presents PlanarSplatting, an ultra-fast and accurate surface reconstruction approach for multiview indoor images.
+                            We take the 3D planes as the main objective due to their compactness and structural expressiveness in indoor scenes,
+                            and develop an explicit optimization framework that learns to fit the expected surface of indoor scenes by splatting
+                            the 3D planes into 2.5D depth and normal maps.
+                            As our PlanarSplatting operates directly on the 3D plane primitives, it eliminates the dependencies on 2D/3D plane detection
+                            and plane matching and tracking for planar surface reconstruction.
+                            Furthermore, the essential merits of plane-based representation plus CUDA-based implementation of planar splatting functions,
+                            PlanarSplatting reconstructs an indoor scene in 3 minutes while having significantly better geometric accuracy.
+                            Thanks to our ultra-fast reconstruction speed, the largest quantitative evaluation on the ScanNet and ScanNet++ datasets
+                            over hundreds of scenes clearly demonstrated the advantages of our method.
+                            We believe that our accurate and ultrafast planar surface reconstruction method will be applied in the structured data curation
+                            for surface reconstruction in the future.
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="column column-demo-fig">
-            <div id="card">
-              <model-viewer camera-controls 
-                            id="glb_scanNetV2_1" 
-                            orientation="0deg-90deg180deg" 
-                            src="models/1_ours.glb">
-              </model-viewer>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- ScanNet++ Example -->
-    <div id="ScanNet++" class="example" style="display: none;">
+    <section class="section">
       <div class="container">
-        <div class="row">
-          <div class="column column-demo-fig">
-            <div id="card">
-              <model-viewer camera-controls 
-                            id="glb_scanNet++_0" 
-                            orientation="0deg-90deg180deg" 
-                            src="models/2_ours.glb">
-              </model-viewer>
-            </div>
+          <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths" style="position: relative;">
+                  <h2 class="title is-3">Optimization Example</h2>
+                  <video id="optimization-video" autoplay muted loop playsinline>
+                      <source src="static/images/PlanarSplatting_video.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                  <div id="pause-indicator" style="display: none; position: absolute; top: 50%; left: 50%; 
+                      transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); 
+                      color: white; padding: 10px; border-radius: 5px;">
+                      Paused
+                  </div>
+              </div>
           </div>
-          <div class="column column-demo-fig">
-            <div id="card">
-              <model-viewer camera-controls 
-                            id="glb_scanNet++_1" 
-                            orientation="0deg-90deg180deg" 
-                            src="models/3_ours.glb">
-              </model-viewer>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-
-<div class="div-1">
-<section class="section">
-  <div class="container">
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-four-fifths">
-      <h2 class="title is-3">Fast View Synthesis</h2>
-    </div>  
-  </div>
-  
-  <div class="columns is-centered has-text-centered">
-    <div class="col-md-1" style="margin-right: 250px;">
+    <div class="div-1">
+        <section class="section">
+            <div class="container">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">Comparison of Planar Reconstruction</h2>
+                        <img src="static/images/compare.png" alt="Description of image">
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="col-md-1" style="margin-right: 20px;">
-      <video class="video" width="10%" id="v1" loop playsinline autoplay muted src="static/images/nvs_comapre_3f1.mp4" onplay="resizeAndPlay(this)" style="width: 50%; height:auto;"></video>
-      <canvas height=10 class="videoMerge" id="v1Merge"></canvas>
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">More Interactive Meshes by PlanarSplatting</h2>
+            <div id="exampleList" style="text-align: center;">
+                <button id="scanNetV2Button" onclick="showExample('ScanNetV2')" class="external-link button is-normal is-rounded is-dark">ScanNetV2</button>
+                <button onclick="showExample('ScanNet++')" class="external-link button is-normal is-rounded is-dark">ScanNet++</button>
+            </div>
+            <br>
+
+            <div id="ScanNetV2" class="example" style="display: none;">
+                <div class="container">
+                    <div class="row">
+                        <div class="column column-demo-fig">
+                            <div id="card">
+                                <model-viewer camera-controls id="glb_scanNetV2_0" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0146_00_simple.glb"></model-viewer>
+                            </div>
+                            <div id="card">
+                              <model-viewer camera-controls id="glb_scanNetV2_0" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0164_00_simple.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="column column-demo-fig">
+                            <div id="card">
+                                <model-viewer camera-controls id="glb_scanNetV2_1" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0316_00_simple.glb"></model-viewer>
+                            </div>
+                            <div id="card">
+                              <model-viewer camera-controls id="glb_scanNetV2_0" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0423_00_simple.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="column column-demo-fig">
+                          <div id="card">
+                              <model-viewer camera-controls id="glb_scanNetV2_1" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0549_00_simple.glb"></model-viewer>
+                          </div>
+                          <div id="card">
+                            <model-viewer camera-controls id="glb_scanNetV2_0" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0552_00_simple.glb"></model-viewer>
+                          </div>
+                        </div>
+                        <div class="column column-demo-fig">
+                          <div id="card">
+                              <model-viewer camera-controls id="glb_scanNetV2_1" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0651_00_simple.glb"></model-viewer>
+                          </div>
+                          <div id="card">
+                            <model-viewer camera-controls id="glb_scanNetV2_0" orientation="0deg-90deg180deg" src="meshes/scannetv2/scene0046_00_simple.glb"></model-viewer>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ScanNet++" class="example" style="display: none;">
+                <div class="container">
+                    <div class="row">
+                        <div class="column column-demo-fig">
+                            <div id="card">
+                                <model-viewer camera-controls id="glb_scanNet++_0" orientation="0deg-90deg180deg" src="meshes/scannetpp/3864514494_simple.glb"></model-viewer>
+                            </div>
+                            <div id="card">
+                              <model-viewer camera-controls id="glb_scanNet++_0" orientation="0deg-90deg180deg" src="meshes/scannetpp//3f15a9266d_simple.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="column column-demo-fig">
+                            <div id="card">
+                                <model-viewer camera-controls id="glb_scanNet++_1" orientation="0deg-90deg180deg" src="meshes/scannetpp/45b0dac5e3_simple.glb"></model-viewer>
+                            </div>
+                            <div id="card">
+                              <model-viewer camera-controls id="glb_scanNet++_0" orientation="0deg-90deg180deg" src="meshes/scannetpp/8a20d62ac0_simple.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="column column-demo-fig">
+                            <div id="card">
+                                <model-viewer camera-controls id="glb_scanNet++_1" orientation="0deg-90deg180deg" src="meshes/scannetpp/9b74afd2d2_simple.glb"></model-viewer>
+                            </div>
+                            <div id="card">
+                              <model-viewer camera-controls id="glb_scanNet++_0" orientation="0deg-90deg180deg" src="meshes/scannetpp/bc2fce1d81_simple.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="column column-demo-fig">
+                            <div id="card">
+                                <model-viewer camera-controls id="glb_scanNet++_1" orientation="0deg-90deg180deg" src="meshes/scannetpp//c8f2218ee2_simple.glb"></model-viewer>
+                            </div>
+                            <div id="card">
+                              <model-viewer camera-controls id="glb_scanNet++_0" orientation="0deg-90deg180deg" src="meshes/scannetpp/d6702c681d_simple.glb"></model-viewer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="div-1">
+        <section class="section">
+            <div class="container">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <h2 class="title is-3">PlanarSplatting for Novel View Synthesis</h2>
+                    </div>
+                </div>
+                <div class="columns is-centered has-text-centered">
+                    <div class="col-md-1" style="margin-right: 250px;"></div>
+                    <div class="col-md-1" style="margin-right: 20px;">
+                        <video class="video"  width="10%" id="v1" loop playsinline autoplay muted src="static/images/nvs_comapre_3f1.mp4" onplay="resizeAndPlay(this)" style="width: 50%; height: auto;"></video>
+                        <canvas height="10" class="videoMerge" id="v1Merge"></canvas>
+                    </div>
+                    <div class="col-md-1" style="margin-left: 20px;">
+                        <video class="video"   width="10%" id="v2" loop playsinline autoplay muted src="static/images/nvs_comapre_45b.mp4" onplay="resizeAndPlay(this)" style="width: 50%; height: auto;"></video>
+                        <canvas height="10" class="videoMerge" id="v2Merge"></canvas>
+                    </div>
+                    <div class="col-md-1" style="margin-right: 250px;"></div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="col-md-1" style="margin-left: 20px;">
-      <video class="video" width="10%" id="v2" loop playsinline autoplay muted src="static/images/nvs_comapre_45b.mp4" onplay="resizeAndPlay(this)" style="width: 50%; height:auto;"></video>
-      <canvas height=10 class="videoMerge" id="v2Merge"></canvas>
-    </div>
+    <script>
+      const optimizationVideo = document.getElementById('optimization-video');
+      const pauseIndicator = document.getElementById('pause-indicator');
 
-    <div class="col-md-1" style="margin-right: 250px;">
-    </div>
-  </div>
-  </div>
-</section>
-</div>
+      optimizationVideo.addEventListener('mouseover', function() {
+          this.pause();
+          pauseIndicator.style.display = 'block'; 
+      });
 
-<section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>@article{PlanarSplatting2024,
-          title   = {PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes},
-          author  = {Tan, Bin and Yu, Rui and Shen, Yujun and Xue, Nan},
-          journal = {arXiv},
-          year    = {2024}
+      optimizationVideo.addEventListener('mouseout', function() {
+          this.play();
+          pauseIndicator.style.display = 'none';
+      });
+    </script>
+
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>@inproceedings{PlanarSplatting2024,
+    title   = {PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes},
+    author  = {Tan, Bin and Yu, Rui and Shen, Yujun and Xue, Nan},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+    year    = {2025}
 }
-  </code></pre>
-    </div>
-</section>
-
-
-<script src="static/bind.js"></script>
-<script> modelEventListeners()</script>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            Website source code partially borrowed from <a href="https://jinlinyi.github.io/3DFIRES/">here</a>.
-          </p>
+            </code></pre>
         </div>
-      </div>
-    </div>
-  </div>
-</footer>
+    </section>
+
+    <script src="static/bind.js"></script>
+    <script>
+        modelEventListeners();
+    </script>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p>
+                            Website source code partially borrowed from <a href="https://jinlinyi.github.io/3DFIRES/">here</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
-</html>
 
+</html>
